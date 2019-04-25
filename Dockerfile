@@ -27,9 +27,15 @@ RUN ntpd -gq \
   ln -sf "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime &&\
   dpkg-reconfigure -f noninteractive tzdata
 
+RUN mkdir /usr/local/apache2/conf/vhosts/
+
 #COPY conf/vhost.conf /usr/local/apache2/conf/vhost.conf
 COPY conf/httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY conf/vhosts/000-default.conf /usr/local/apache2/conf/vhosts/000-default.conf
+
+#COPY conf/httpd.conf /usr/local/apache2/conf/httpd.bak
 
 RUN mkdir /var/lib/php-fcgi
+#RUN mkdir /usr/local/apache2/conf/vhosts
 
 # RUN mkdir /usr/local/apache2/error_pages && chown -R daemon:daemon /usr/local/apache2/error_pages
